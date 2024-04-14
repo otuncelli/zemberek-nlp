@@ -9,7 +9,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
-
+import zemberek.core.text.TextIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -24,16 +24,16 @@ private static Locale localeTr = new Locale("tr");
 
 static {
     try {
-        for(String line: Resources.readLines(Resources.getResource("tokenization/abbreviations.txt"),Charsets.UTF_8)) {
-            if (line.trim().length() > 0) {
-                final String abbr = line.trim().replaceAll("\\s+",""); // erase spaces
-                if (abbr.endsWith(".")) {
-                    abbreviations.add(abbr);
-                    abbreviations.add(abbr.toLowerCase(Locale.ENGLISH));
-                    abbreviations.add(abbr.toLowerCase(localeTr));
-                }
-            }
+      for (String line : TextIO.loadLinesFromResource("tokenization/abbreviations.txt", "#")) {
+        if (line.trim().length() > 0) {
+          final String abbr = line.trim().replaceAll("\\s+", ""); // erase spaces
+          if (abbr.endsWith(".")) {
+            abbreviations.add(abbr);
+            abbreviations.add(abbr.toLowerCase(Locale.ENGLISH));
+            abbreviations.add(abbr.toLowerCase(localeTr));
+          }
         }
+      }
     } catch (IOException e) {
         e.printStackTrace();
     }
