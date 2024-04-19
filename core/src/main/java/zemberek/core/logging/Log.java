@@ -52,8 +52,10 @@ public final class Log {
     ch.setFormatter(new CUSTOM_FORMAT());
     ch.setLevel(currentLevel);
     logger.addHandler(ch);
-    Runtime.getRuntime()
-        .addShutdownHook(new Thread(() -> fileHandlers.values().forEach(FileHandler::close)));
+    if (fileHandlers.size() > 0) {
+      Runtime.getRuntime()
+          .addShutdownHook(new Thread(() -> fileHandlers.values().forEach(FileHandler::close)));
+    }
   }
 
   static {
